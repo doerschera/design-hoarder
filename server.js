@@ -54,8 +54,6 @@ app.get('/', function(req, res) {
       entry.save(function(err, doc) {
         if(err) {
           console.log(err);
-        } else {
-          console.log(doc);
         }
       })
     })
@@ -77,17 +75,33 @@ app.get('/', function(req, res) {
       entry.save(function(err, doc) {
         if(err) {
           console.log(err);
-        } else {
-          console.log(doc);
         }
       })
     })
 
   })
 
-  // collassal
+  // collossal
   request('http://www.thisiscolossal.com/', function(error, response, html) {
     var $ = cheerio.load(html);
+
+    $('article').each(function(i, element) {
+      var result = {};
+
+      result.title = $(this).find('h1').find('a').text();
+      result.link = $(this).find('h1').find('a').attr('href');
+      result.img = $(this).children('.entry-content').first().find('img').attr('src');
+      result.source = "Collossal";
+
+      var entry = new Article(result);
+      entry.save(function(err, doc) {
+        if(err) {
+          console.log(err);
+        } else {
+          console.log(doc);
+        }
+      })
+    })
 
   })
 
