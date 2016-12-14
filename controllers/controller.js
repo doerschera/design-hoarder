@@ -115,7 +115,10 @@ router.get('/', function(req, res) {
 })
 
 router.get('/home', function(req, res) {
-  res.render('index');
+  Article.find({}, function(err, result) {
+    var data = {articles: result};
+    res.render('index', data);
+  })
 })
 
 module.exports = router;
