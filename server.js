@@ -97,15 +97,37 @@ app.get('/', function(req, res) {
       entry.save(function(err, doc) {
         if(err) {
           console.log(err);
-        } else {
-          console.log(doc);
         }
       })
     })
 
   })
 
+  // socks
+  request('http://socks-studio.com/', function(error, response, html) {
+    var $ = cheerio.load(html);
+
+    $('.featured-content').each(function(i, element) {
+      var result = {};
+
+      result.title = $(this).find('.entry-title').children('a').attr('title');
+      result.link = $(this).find('.entry-title').children('a').attr('href');
+      result.img = $(this).find('article').find('img').attr('src');
+      result.source = 'Socks';
+
+      var entry = new Article(result);
+      entry.save(function(err, doc) {
+        if(err) {
+          console.log(err);
+        } else {
+          console.log(doc);
+        }
+      })
+    })
+  })
+
   res.send(true);
+  console.log(true);
 })
 
 
