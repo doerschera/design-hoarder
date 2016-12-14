@@ -4,7 +4,6 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 // mongo dependencies
 var mongoose = require('mongoose');
-var mongoose.Promise = require('bluebird');
 // scraping dependencies
 var request = require('request');
 var cheerio = require('cheerio');
@@ -32,7 +31,28 @@ db.once('open', function() {
 })
 
 // --------- Routes ---------------------
+app.get('/', function(req, res) {
 
+  // ------- scarping ------------
+  // Design milk
+  request('http://design-milk.com/', function(error, response, html) {
+    var $ = cheerio.load(html);
+
+    $('.latest-listings-grid .article-list-item').each(function(i, element) {
+      var result = {};
+
+      result.title = $(this).children('.article-content').find('h3').text();
+      result.link = $(this).children('.article-image').attr('href');
+      result.img = $(this).children('.article-image').find('img').attr('src');
+
+
+      console.log(result);
+    })
+
+  })
+
+
+})
 
 
 
