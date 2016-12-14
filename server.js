@@ -4,6 +4,9 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 // mongo dependencies
 var mongoose = require('mongoose');
+var Article = require('./models/article.js');
+var Comment = require('./models/comment.js');
+var User = require('./models/user.js');
 // scraping dependencies
 var request = require('request');
 var cheerio = require('cheerio');
@@ -33,7 +36,7 @@ db.once('open', function() {
 // --------- Routes ---------------------
 app.get('/', function(req, res) {
 
-  // ------- scarping ------------
+  // ------- scraping ------------
   // Design milk
   request('http://design-milk.com/', function(error, response, html) {
     var $ = cheerio.load(html);
@@ -44,15 +47,23 @@ app.get('/', function(req, res) {
       result.title = $(this).children('.article-content').find('h3').text();
       result.link = $(this).children('.article-image').attr('href');
       result.img = $(this).children('.article-image').find('img').attr('src');
+      result.source = 'Design Milk'
 
-
-      console.log(result);
+      // save to db
+      var entry = new Article(result);
+      entry.save(function(err, doc) {
+        if(err) {
+          console.log(err);
+        } else {
+          console.log(doc);
+        }
+      })
     })
-
   })
-
-
+  res.send(true);
 })
+
+
 
 
 
