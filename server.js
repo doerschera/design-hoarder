@@ -57,77 +57,76 @@ app.get('/', function(req, res) {
         }
       })
     })
-  })
 
-  // designboom
-  request('http://www.designboom.com/', function(error, response, html) {
-    var $ = cheerio.load(html);
+    // designboom
+    request('http://www.designboom.com/', function(error, response, html) {
+      var $ = cheerio.load(html);
 
-    $('.News').each(function(i, element) {
-      var result = {};
+      $('.News').each(function(i, element) {
+        var result = {};
 
-      result.title = $(this).children('h1').text();
-      result.link = $(this).children('.Image').find('a').attr('href');
-      result.img = $(this).children('.Image').find('img').attr('src');
-      result.source = 'Design Boom';
+        result.title = $(this).children('h1').text();
+        result.link = $(this).children('.Image').find('a').attr('href');
+        result.img = $(this).children('.Image').find('img').attr('src');
+        result.source = 'Design Boom';
 
-      var entry = new Article(result);
-      entry.save(function(err, doc) {
-        if(err) {
-          console.log(err);
-        }
+        var entry = new Article(result);
+        entry.save(function(err, doc) {
+          if(err) {
+            console.log(err);
+          }
+        })
       })
-    })
 
-  })
+      // collossal
+      request('http://www.thisiscolossal.com/', function(error, response, html) {
+        var $ = cheerio.load(html);
 
-  // collossal
-  request('http://www.thisiscolossal.com/', function(error, response, html) {
-    var $ = cheerio.load(html);
+        $('article').each(function(i, element) {
+          var result = {};
 
-    $('article').each(function(i, element) {
-      var result = {};
+          result.title = $(this).find('h1').find('a').text();
+          result.link = $(this).find('h1').find('a').attr('href');
+          result.img = $(this).children('.entry-content').first().find('img').attr('src');
+          result.source = "Collossal";
 
-      result.title = $(this).find('h1').find('a').text();
-      result.link = $(this).find('h1').find('a').attr('href');
-      result.img = $(this).children('.entry-content').first().find('img').attr('src');
-      result.source = "Collossal";
+          var entry = new Article(result);
+          entry.save(function(err, doc) {
+            if(err) {
+              console.log(err);
+            }
+          })
+        })
 
-      var entry = new Article(result);
-      entry.save(function(err, doc) {
-        if(err) {
-          console.log(err);
-        }
-      })
-    })
+        // socks
+        request('http://socks-studio.com/', function(error, response, html) {
+          var $ = cheerio.load(html);
 
-  })
+          $('.featured-content').each(function(i, element) {
+            var result = {};
 
-  // socks
-  request('http://socks-studio.com/', function(error, response, html) {
-    var $ = cheerio.load(html);
+            result.title = $(this).find('.entry-title').children('a').attr('title');
+            result.link = $(this).find('.entry-title').children('a').attr('href');
+            result.img = $(this).find('article').find('img').attr('src');
+            result.source = 'Socks';
 
-    $('.featured-content').each(function(i, element) {
-      var result = {};
-
-      result.title = $(this).find('.entry-title').children('a').attr('title');
-      result.link = $(this).find('.entry-title').children('a').attr('href');
-      result.img = $(this).find('article').find('img').attr('src');
-      result.source = 'Socks';
-
-      var entry = new Article(result);
-      entry.save(function(err, doc) {
-        if(err) {
-          console.log(err);
-        } else {
-          console.log(doc);
-        }
+            var entry = new Article(result);
+            entry.save(function(err, doc) {
+              if(err) {
+                console.log(err);
+              }
+            })
+          })
+        })
       })
     })
   })
-
-  res.send(true);
+  res.redirect('/home');
   console.log(true);
+})
+
+app.get('/home', function(req, res) {
+  res.send(true);
 })
 
 

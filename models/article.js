@@ -15,6 +15,10 @@ var ArticleSchema = new Schema({
   source: {
     type: String
   },
+  date: {
+    type: Date,
+    default: Date.now
+  },
   comment: [{
     type: Schema.Types.ObjectId,
     ref: 'Comment'
