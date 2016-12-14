@@ -20,6 +20,7 @@ app.use(express.static('public'));
 
 // --------- Mongo Config ------------------
 mongoose.connect('mongodb://localhost/designHoarder');
+// Heroku Connection mongodb://heroku_0mh2s0xv:95eg8j4nhn0c9mabf329lhh97p@ds133158.mlab.com:33158/heroku_0mh2s0xv
 var db = mongoose.connection;
 
 db.on('error', function(error) {
