@@ -4,7 +4,9 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 // mongo dependencies
 var mongoose = require('mongoose');
-var mongoose.Promise = require('bluebird');
+var Article = require('./models/article.js');
+var Comment = require('./models/comment.js');
+var User = require('./models/user.js');
 // scraping dependencies
 var request = require('request');
 var cheerio = require('cheerio');
@@ -32,6 +34,101 @@ db.once('open', function() {
 })
 
 // --------- Routes ---------------------
+app.get('/', function(req, res) {
+
+  // ------- scraping ------------
+  // Design milk
+  request('http://design-milk.com/', function(error, response, html) {
+    var $ = cheerio.load(html);
+
+    $('.latest-listings-grid .article-list-item').each(function(i, element) {
+      var result = {};
+
+      result.title = $(this).children('.article-content').find('h3').text();
+      result.link = $(this).children('.article-image').attr('href');
+      result.img = $(this).children('.article-image').find('img').attr('src');
+      result.source = 'Design Milk'
+
+      // save to db
+      var entry = new Article(result);
+      entry.save(function(err, doc) {
+        if(err) {
+          console.log(err);
+        }
+      })
+    })
+
+    // designboom
+    request('http://www.designboom.com/', function(error, response, html) {
+      var $ = cheerio.load(html);
+
+      $('.News').each(function(i, element) {
+        var result = {};
+
+        result.title = $(this).children('h1').text();
+        result.link = $(this).children('.Image').find('a').attr('href');
+        result.img = $(this).children('.Image').find('img').attr('src');
+        result.source = 'Design Boom';
+
+        var entry = new Article(result);
+        entry.save(function(err, doc) {
+          if(err) {
+            console.log(err);
+          }
+        })
+      })
+
+      // collossal
+      request('http://www.thisiscolossal.com/', function(error, response, html) {
+        var $ = cheerio.load(html);
+
+        $('article').each(function(i, element) {
+          var result = {};
+
+          result.title = $(this).find('h1').find('a').text();
+          result.link = $(this).find('h1').find('a').attr('href');
+          result.img = $(this).children('.entry-content').first().find('img').attr('src');
+          result.source = "Collossal";
+
+          var entry = new Article(result);
+          entry.save(function(err, doc) {
+            if(err) {
+              console.log(err);
+            }
+          })
+        })
+
+        // socks
+        request('http://socks-studio.com/', function(error, response, html) {
+          var $ = cheerio.load(html);
+
+          $('.featured-content').each(function(i, element) {
+            var result = {};
+
+            result.title = $(this).find('.entry-title').children('a').attr('title');
+            result.link = $(this).find('.entry-title').children('a').attr('href');
+            result.img = $(this).find('article').find('img').attr('src');
+            result.source = 'Socks';
+
+            var entry = new Article(result);
+            entry.save(function(err, doc) {
+              if(err) {
+                console.log(err);
+              }
+            })
+          })
+        })
+      })
+    })
+  })
+  res.redirect('/home');
+  console.log(true);
+})
+
+app.get('/home', function(req, res) {
+  res.send(true);
+})
+
 
 
 
