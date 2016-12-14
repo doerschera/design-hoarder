@@ -60,6 +60,37 @@ app.get('/', function(req, res) {
       })
     })
   })
+
+  // designboom
+  request('http://www.designboom.com/', function(error, response, html) {
+    var $ = cheerio.load(html);
+
+    $('.News').each(function(i, element) {
+      var result = {};
+
+      result.title = $(this).children('h1').text();
+      result.link = $(this).children('.Image').find('a').attr('href');
+      result.img = $(this).children('.Image').find('img').attr('src');
+      result.source = 'Design Boom';
+
+      var entry = new Article(result);
+      entry.save(function(err, doc) {
+        if(err) {
+          console.log(err);
+        } else {
+          console.log(doc);
+        }
+      })
+    })
+
+  })
+
+  // collassal
+  request('http://www.thisiscolossal.com/', function(error, response, html) {
+    var $ = cheerio.load(html);
+
+  })
+
   res.send(true);
 })
 
