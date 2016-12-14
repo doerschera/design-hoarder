@@ -1,16 +1,23 @@
 
 <section>
   <div class="row">
-    {{#each articles}}
-      <div class="col s6" data-article-id="{{_id}}">
-        <a href="{{link}}">
-          <img class="response-img" src="{{img}}" alt="{{title}}">
-        </a>
-        <a href="{{link}}">
-          <h3 class="truncate">{{title}}</h3>
-        </a>
-        <p>{{source}}</p>
+    <div class="col s9 m10 l11">
+      {{#each articles}}
+      <div class="col s6">
+        <div data-article-id="{{_id}}">
+          <a href="{{link}}">
+            <img class="response-img" src="{{img}}" alt="{{title}}">
+          </a>
+          <a href="{{link}}">
+            <h3 class="truncate">{{title}}</h3>
+          </a>
+          <p>{{source}}</p>
+        </div>
       </div>
-    {{/each}}
+      {{/each}}
+    </div>
+    <div class="col s9 m10 l11 left-nav">
+      
+    </div>
   </div>
 </section>
