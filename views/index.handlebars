@@ -11,7 +11,7 @@
           </div>
           <div class="col s12 article-title">
             <h3 class="truncate">{{title}}</h3>
-            <p>{{source}}<i></i></p>
+            <p>{{source}}</p>
           </div>
         </div>
       </div>
@@ -45,4 +45,50 @@
     <button type="button" class="btn" id="sign-up">Sign Up</button>
   </div>
   <p class="error-message"></p>
+</div>
+
+<!-- view article & comment -->
+<div class="row">
+  <div class="col s10 m6 l11 article-large">
+    <div class="article-item col s12 l6 offset-l3">
+      <div class="article-wrapper" data-article-id="">
+        <div class="article-img article-img-large">
+          <img src="http://2.design-milk.com/images/2016/12/Design_Milk_Design_for_Industry_Tokyo_FI-460x250.jpg">
+        </div>
+        <div class="col s12 article-title">
+          <a href="#">
+            <h4 class="truncate">City in a Suitcase: Designer Daisuke Kitagawa Offers Insight into Tokyo’s Culture</h4>
+          </a>
+          <p>Design Milk</p>
+        </div>
+      </div>
+    </div>
+    <!-- Comments -->
+    <div class="comment col s12 l6 offset-l3">
+      <div class="row">
+          <h6>username</h6>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et.</p>
+          <p>12/15/16</p>
+      </div>
+    </div>
+    <div class="comment col s12 l6 offset-l3">
+      <div class="row">
+          <h6>username</h6>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et.</p>
+          <p>12/15/16</p>
+      </div>
+    </div>
+    <div class="add-comment col s12 l6 offset-l3">
+      <div class="row">
+        <h4>Talk about it</h4>
+        <div class="input-field">
+          <textarea id="comment" class="materialize-textarea" type="text"></textarea>
+          <label for="comment">Add a comment</label>
+        </div>
+      </div>
+      <div class="row">
+        <button type="button" class="btn" id="submit-comment">Submit</button>
+      </div>
+    </div>
+  </div>
 </div>

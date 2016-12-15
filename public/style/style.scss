@@ -52,11 +52,15 @@ section {
   height: 100vh;
   overflow: auto;
   padding-top: 100px;
+  opacity: 0.3;
 }
 
 .article-item {
   margin-bottom: 50px;
   border: solid 1px black;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .article-item.col {
@@ -88,6 +92,7 @@ section {
 }
 
 .sign-in-modal {
+  display: none;
   background-color: white;
   border: solid 2px black;
   width: 500px;
@@ -104,35 +109,108 @@ section {
       cursor: pointer;
     }
   }
-  input[type=text] {
-    border-color: black;
-  }
-  input[type=text]:focus:not([readonly]) {
-    border-color: black;
-    box-shadow: none;
-  }
-  input[type=text]:focus:not([readonly])+label {
-    color: black;
-  }
-  input[type=password] {
-    border-color: black;
-  }
-  input[type=password]:focus:not([readonly]) {
-    border-color: black;
-    box-shadow: none;
-  }
-  input[type=password]:focus:not([readonly])+label {
-    color: black;
-  }
-  .input-filed label {
-    color: black;
-  }
-  .btn {
-    background-color: white;
-    border: solid 1px black;
-    color: black;
-  }
   #sign-in {
     margin-right: 25px;
+  }
+}
+
+.btn {
+  background-color: white;
+  border: solid 1px black;
+  color: black;
+}
+
+.article-large {
+  position: fixed;
+  top: 50px;
+  left: 50% !important;
+  transform: translate(-50%, 0);
+  margin: 0;
+  height: 90vh;
+  overflow: auto;
+  .article-item {
+    margin-bottom: 0;
+  }
+}
+
+input[type=text] {
+  border-color: black;
+}
+
+input[type=text]:focus:not([readonly]) {
+  border-color: black;
+  box-shadow: none;
+}
+
+input[type=text]:focus:not([readonly])+label {
+  color: black;
+}
+
+input[type=password] {
+  border-color: black;
+}
+
+input[type=password]:focus:not([readonly]) {
+  border-color: black;
+  box-shadow: none;
+}
+
+input[type=password]:focus:not([readonly])+label {
+  color: black;
+}
+
+textarea.materialize-textarea {
+  border-color: black;
+}
+
+textarea.materialize-textarea:focus:not([readonly]) {
+  border-color: black;
+  box-shadow: none;
+}
+
+textarea.materialize-textarea:focus:not([readonly])+label {
+  color: black;
+}
+
+.input-field label {
+  color: black;
+}
+
+.article-img-large {
+  height: 300px;
+}
+
+.comment, .add-comment {
+  background-color: white;
+  border: solid 1px black;
+  h6, p {
+    padding: 10px;
+  }
+  h6 {
+    background-color: black;
+    color: white;
+    margin-top: 0;
+  }
+  .row {
+    margin-bottom: 0;
+  }
+}
+
+.comment.col, .add-comment.col {
+  padding: 0px;
+}
+
+.add-comment {
+  padding: 0 25px !important;
+  h4 {
+    margin-top: 20px;
+    padding-left: 0;
+  }
+  .btn {
+    margin: 20px 0;
+    &:hover {
+      background-color: black;
+      color: white;
+    }
   }
 }
