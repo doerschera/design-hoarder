@@ -14,12 +14,16 @@ var UserSchema = new Schema({
       function(password) {
         return password.length >= 8;
       },
-      "You're password contain at least 8 characters!"
+      "You're password must contain at least 8 characters!"
     ]
   },
   comment: [{
     type: Schema.Types.ObjectId,
     ref: 'Comment'
+  }],
+  article: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Article'
   }]
 })
 

@@ -8,11 +8,38 @@ body {
 header {
   width: 100%;
   height: 50px;
+  border-bottom: solid 2px black;
+  padding: 0px !important;
   h6 {
     line-height: 50px;
     font-weight: 100;
     text-align: center;
     font-size: 1.75rem;
+    display: inline-block;
+    margin-top: 0px;
+    padding: 0 25px;
+    background-color: black;
+    color: white;
+  }
+}
+
+.nav-links {
+  display: inline-block;
+  float: right;
+  margin: 0;
+  li {
+    width: 75px;
+    float: right;
+    line-height: 48px;
+    text-align: center;
+    &:nth-child(2) {
+      border-left: solid 1px black;
+      border-right: solid 1px black;
+    }
+    &:hover {
+      background-color: black;
+      color: white;
+    }
   }
 }
 
@@ -28,20 +55,12 @@ section {
 
 .article-item {
   margin-bottom: 50px;
-  // &:nth-child(n) {
-  //   background-color: #e6e6e6;
-  // }
-  // &:nth-child(2n) {
-  //   background-color: #b3b3b3;
-  // }
-  // &:nth-child(3n) {
-  //   background-color: #808080;
-  // }
+  border: solid 1px black;
 }
 
-// .article-wrapper {
-//   padding: 50px;
-// }
+.article-item.col {
+  padding: 0px;
+}
 
 .article-img {
   height: 200px;
@@ -63,6 +82,7 @@ section {
   padding: 25px;
   h3 {
     font-size: 1.25rem;
+    line-height: 111%;
   }
 }
 
