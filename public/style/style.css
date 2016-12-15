@@ -70,19 +70,42 @@ section {
     font-size: 1.25rem;
     line-height: 111%; }
 
-.left-menu {
-  height: 100vh;
+.sign-in-modal {
+  background-color: white;
+  border: solid 2px black;
+  width: 500px;
+  padding: 25px 50px;
   position: fixed;
-  top: 0;
-  right: 0 !important;
-  padding: 0 !important; }
-  .left-menu .menu-block {
-    height: 33.33%; }
-  .left-menu #top {
-    background-color: #e6e6e6; }
-  .left-menu #middle {
-    background-color: #b3b3b3; }
-  .left-menu #bottom {
-    background-color: #808080; }
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+  .sign-in-modal .material-icons {
+    float: right;
+    color: black; }
+    .sign-in-modal .material-icons:hover {
+      cursor: pointer; }
+  .sign-in-modal input[type=text] {
+    border-color: black; }
+  .sign-in-modal input[type=text]:focus:not([readonly]) {
+    border-color: black;
+    box-shadow: none; }
+  .sign-in-modal input[type=text]:focus:not([readonly]) + label {
+    color: black; }
+  .sign-in-modal input[type=password] {
+    border-color: black; }
+  .sign-in-modal input[type=password]:focus:not([readonly]) {
+    border-color: black;
+    box-shadow: none; }
+  .sign-in-modal input[type=password]:focus:not([readonly]) + label {
+    color: black; }
+  .sign-in-modal .input-filed label {
+    color: black; }
+  .sign-in-modal .btn {
+    background-color: white;
+    border: solid 1px black;
+    color: black; }
+  .sign-in-modal #sign-in {
+    margin-right: 25px; }
 
 /*# sourceMappingURL=style.css.map */

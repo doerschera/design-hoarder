@@ -39,6 +39,7 @@ header {
     &:hover {
       background-color: black;
       color: white;
+      cursor: pointer;
     }
   }
 }
@@ -86,22 +87,52 @@ section {
   }
 }
 
-.left-menu {
-  height: 100vh;
+.sign-in-modal {
+  background-color: white;
+  border: solid 2px black;
+  width: 500px;
+  padding: 25px 50px;;
   position: fixed;
-  top: 0;
-  right: 0 !important;
-  padding: 0 !important;
-  .menu-block {
-    height: 33.33%;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  .material-icons {
+    float: right;
+    color: black;
+    &:hover {
+      cursor: pointer;
+    }
   }
-  #top {
-    background-color: #e6e6e6;
+  input[type=text] {
+    border-color: black;
   }
-  #middle {
-    background-color: #b3b3b3;
+  input[type=text]:focus:not([readonly]) {
+    border-color: black;
+    box-shadow: none;
   }
-  #bottom {
-    background-color: #808080;
+  input[type=text]:focus:not([readonly])+label {
+    color: black;
+  }
+  input[type=password] {
+    border-color: black;
+  }
+  input[type=password]:focus:not([readonly]) {
+    border-color: black;
+    box-shadow: none;
+  }
+  input[type=password]:focus:not([readonly])+label {
+    color: black;
+  }
+  .input-filed label {
+    color: black;
+  }
+  .btn {
+    background-color: white;
+    border: solid 1px black;
+    color: black;
+  }
+  #sign-in {
+    margin-right: 25px;
   }
 }
