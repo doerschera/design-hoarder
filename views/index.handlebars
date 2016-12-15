@@ -3,21 +3,33 @@
   <div class="row">
     <div class="col s9 m10 l11">
       {{#each articles}}
-      <div class="col s6">
-        <div data-article-id="{{_id}}">
+      <div class="col s12 l6 article-item">
+        <div class="article-wrapper" data-article-id="{{_id}}">
           <a href="{{link}}">
-            <img class="response-img" src="{{img}}" alt="{{title}}">
+            <div class="article-img">
+              <img src="{{img}}" alt="{{title}}">
+            </div>
           </a>
-          <a href="{{link}}">
-            <h3 class="truncate">{{title}}</h3>
-          </a>
-          <p>{{source}}</p>
+          <div class="col s12 article-title">
+            <a href="{{link}}">
+              <h3 class="truncate">{{title}}</h3>
+            </a>
+            <p>{{source}}</p>
+          </div>
         </div>
       </div>
       {{/each}}
     </div>
-    <div class="col s9 m10 l11 left-nav">
-      
+    <div class="left-menu col s3 m2 l1">
+      <div class="menu-block" id="top">
+
+      </div>
+      <div class="menu-block" id="middle">
+
+      </div>
+      <div class="menu-block" id="bottom">
+
+      </div>
     </div>
   </div>
 </section>
