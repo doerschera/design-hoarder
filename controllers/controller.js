@@ -191,6 +191,38 @@ router.post('/home', function(req, res) {
         })
       break;
 
+    case 'comment':
+    console.log('comment');
+      var articleId = data.article;
+      var comment = {
+        body: data.comment,
+        username: currentUser
+      }
+      var newComment = new Comment(comment);
+
+      newComment.save(function(err, doc) {
+        if(err) {
+          console.log(err);
+        } else {
+          User.findOneAndUpdate({username: currentUser}, {$push: {comment: doc._id}}).exec(function(err, doc) {
+            if(err) {
+              console.log(err);
+            }
+          })
+
+          Article.findOneAndUpdate({_id: articleId}, {$push: {comment: doc._id}})
+            .exec(function(err, doc) {
+              if(err) {
+                console.log(err);
+              }
+            })
+
+          res.send(true);
+        }
+      })
+
+      break;
+
   }
 })
 

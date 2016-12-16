@@ -133,14 +133,13 @@ $(document).ready(function() {
 
   $('.article-item').on('click', function() {
     var data = $(this).data();
-    console.log(data);
     var articleId = data.articleId;
     var link = data.articleLink;
     var img = $('[data-article-id='+articleId+'] div.article-img img').attr('src');
     var title = $('[data-article-id='+articleId+'] div.article-img img').attr('alt');
     var source = $('[data-article-id='+articleId+'] div.article-title p').html();
 
-    $('.article-large.article-item').data('article-id', articleId);
+    $('.article-large').attr('data-article-id', articleId);
     $('.article-large div.article-img img').attr('src', img);
     $('.article-large div.article-img img').attr('alt', title);
     $('.article-large div.article-title a').attr('href', link);
@@ -149,6 +148,22 @@ $(document).ready(function() {
 
     $('.article-large').show();
     $('section').css('opacity', '0.3');
+  })
+
+  $('#submit-comment').on('click', function() {
+    var id = $('.article-large').data()
+    var data = {
+      article: id.articleId,
+      comment: $('#comment').val(),
+      type: 'comment'
+    }
+
+    console.log(data);
+
+    $.post('/home', data).then(function(response) {
+      console.log(response);
+    })
+
   })
 
 
