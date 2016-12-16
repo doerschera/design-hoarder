@@ -14,7 +14,7 @@ var UserSchema = new Schema({
       function(password) {
         return password.length >= 8;
       },
-      "You're password must contain at least 8 characters!"
+      "Your password must contain at least 8 characters!"
     ]
   },
   comment: [{

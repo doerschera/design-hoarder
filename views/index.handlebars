@@ -23,15 +23,15 @@
 <!-- sign in modal -->
 <div class="sign-in-modal">
   <div class="row">
-    <i class="material-icons">clear</i>
+    <i class="material-icons" id="close">clear</i>
   </div>
   <div class="row">
     <h6>Sign in or sign up to save your favorite articles and add comments!</h6>
   </div>
   <div class="row">
     <div class="input-field">
-      <input id="email" type="text">
-      <label for="email">Email</label>
+      <input id="username" type="text">
+      <label for="username">Username</label>
     </div>
   </div>
   <div class="row">
@@ -41,10 +41,10 @@
     </div>
   </div>
   <div class="row">
+    <p class="error-message"></p>
     <button type="button" class="btn" id="sign-in">Sign In</button>
     <button type="button" class="btn" id="sign-up">Sign Up</button>
   </div>
-  <p class="error-message"></p>
 </div>
 
 <!-- view article & comment -->

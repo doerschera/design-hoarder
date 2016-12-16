@@ -8,6 +8,8 @@ var User = require('../models/user.js');
 // scraping dependencies
 var request = require('request');
 var cheerio = require('cheerio');
+// password hash for user sign-in
+var passwordHash = require('password-hash');
 
 // --------- Mongo Config ------------------
 mongoose.connect('mongodb://localhost/designHoarder');
@@ -114,11 +116,69 @@ router.get('/', function(req, res) {
   console.log(true);
 })
 
+// user variable
+var currentUser = '';
+
 router.get('/home', function(req, res) {
   Article.find({}, function(err, result) {
     var data = {articles: result};
     res.render('index', data);
   })
+})
+
+router.post('/home', function(req, res) {
+  var data = req.body;
+
+  switch(data.type) {
+
+    case 'sign up':
+      var hashedPassword = passwordHash.generate(data.password);
+      var userDetails = {
+        username: data.username,
+        password: hashedPassword
+      }
+      var user = new User(userDetails)
+
+      user.save(function(err) {
+        if (err) {
+          console.log(err);
+          var errMessage;
+          for(field in err.errors) {
+            errMessage = err.errors[field].message;
+          }
+          console.log(errMessage);
+        }
+        if(errMessage != undefined) {
+          res.send(errMessage);
+        } else {
+          currentUser = userDetails.username;
+          res.send(true);
+        }
+      })
+      break;
+
+    case 'sign in':
+      var username = data.username;
+      var password = data.password;
+      console.log('sign in');
+
+      User.find({username: username}, function(err, result) {
+        if(result.length < 1) {
+          res.send('Username or password incorrect!');
+        } else {
+          var hashedPassword = result[0].password;
+          var verify = passwordHash.verify(password, hashedPassword);
+
+          if(verify) {
+            currentUser = username;
+            res.send(true);
+          } else {
+            res.send('Username or password incorrect!');
+          }
+        }
+      })
+      break;
+  }
 })
 
 module.exports = router;
