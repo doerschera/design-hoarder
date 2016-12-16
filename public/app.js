@@ -129,5 +129,27 @@ $(document).ready(function() {
     $(this).removeClass('show-all').addClass('show-favorites');
   })
 
+  // -------- Comments --------------------
+
+  $('.article-item').on('click', function() {
+    var data = $(this).data();
+    console.log(data);
+    var articleId = data.articleId;
+    var link = data.articleLink;
+    var img = $('[data-article-id='+articleId+'] div.article-img img').attr('src');
+    var title = $('[data-article-id='+articleId+'] div.article-img img').attr('alt');
+    var source = $('[data-article-id='+articleId+'] div.article-title p').html();
+
+    $('.article-large.article-item').data('article-id', articleId);
+    $('.article-large div.article-img img').attr('src', img);
+    $('.article-large div.article-img img').attr('alt', title);
+    $('.article-large div.article-title a').attr('href', link);
+    $('.article-large div.article-title a h4').html(title);
+    $('.article-large div.article-title p').html(source);
+
+    $('.article-large').show();
+    $('section').css('opacity', '0.3');
+  })
+
 
 })
