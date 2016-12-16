@@ -8,12 +8,21 @@ $(document).ready(function() {
     $('.sign-in-modal').hide();
     $('#sign-out').html('Sign In')
       .addClass('no-user');
+    $('section').css('opacity', '1');
   })
 
   // show modal sign out/sign in
   $('#sign-out').on('click', function() {
     if($(this).hasClass('no-user')) {
       $('.sign-in-modal').show();
+      $('section').css('opacity', '0.3');
+    } else {
+      $.post('/signout', {}).then(function(response) {
+        if(response) {
+          $('.sign-in-modal').show();
+          $('section').css('opacity', '0.3');
+        }
+      });
     }
   })
 
@@ -32,8 +41,6 @@ $(document).ready(function() {
       return false;
     }
 
-    console.log(data);
-
     $.post('/home', data).then(function(response) {
       if(response != true) {
         $('.error-message').html(response);
@@ -42,6 +49,7 @@ $(document).ready(function() {
         }, 5000);
       } else {
         $('.sign-in-modal').hide();
+        $('section').css('opacity', '1');
       }
     })
   })
@@ -71,8 +79,8 @@ $(document).ready(function() {
           $('.error-message').html('');
         }, 5000);
       } else {
-        console.log(response);
         $('.sign-in-modal').hide();
+        $('section').css('opacity', '1');
         // save favorites articles
         favoriteArticles = response;
         pastFavorites(favoriteArticles);
@@ -109,7 +117,6 @@ $(document).ready(function() {
   }
 
   $(document).on('click', '.show-favorites', function() {
-    console.log('click 1');
     $('.no-favorite').hide();
     $(this).html('Back').css({
       color: 'white',
@@ -122,6 +129,8 @@ $(document).ready(function() {
   $(document).on('click', '.show-all', function() {
     console.log('click');
     $('.no-favorite').show();
+    $('.article-large').hide();
+    $('section').css('opacity', '1');
     $(this).html('Favorites').css({
       color: 'black',
       backgroundColor: 'white'
@@ -131,7 +140,15 @@ $(document).ready(function() {
 
   // -------- Comments --------------------
 
-  $('.article-item').on('click', function() {
+  $(document).on('click', '.article-item', function() {
+    $('#all-comments').empty();
+    $('.show-all, .show-favorites').html('Back').css({
+      color: 'white',
+      backgroundColor: 'black'
+    });
+    $('.show-favorites').addClass('show-all');
+    $('.show-favorites').removeClass('show-favorites');
+
     var data = $(this).data();
     var articleId = data.articleId;
     var link = data.articleLink;
@@ -148,12 +165,31 @@ $(document).ready(function() {
 
     $('.article-large').show();
     $('section').css('opacity', '0.3');
+
+    console.log(articleId);
+    // get existing comments from database
+    $.get('/home/'+articleId).then(function(response) {
+      console.log(response);
+      response.forEach(function(comment) {
+        var date = comment.date.replace(/T.*/, '');
+        console.log(date);
+        var commentDiv = $('<div class="comment col s12 l6 offset-l3"></div>');
+        var row = $('<div class="row"></div>')
+        commentDiv.append(row);
+        row.append('<h6>'+comment.username+'</h6>');
+        row.append('<p>'+comment.body+'</p>');
+        row.append('<p class="date">'+date+'</p>');
+
+        $('#all-comments').append(commentDiv);
+      })
+    })
   })
 
   $('#submit-comment').on('click', function() {
     var id = $('.article-large').data()
+    var articleId = id.articleId;
     var data = {
-      article: id.articleId,
+      article: articleId,
       comment: $('#comment').val(),
       type: 'comment'
     }
@@ -162,9 +198,25 @@ $(document).ready(function() {
 
     $.post('/home', data).then(function(response) {
       console.log(response);
-    })
+      $('#comment').val('');
+      $.get('/home/'+articleId).then(function(response) {
+        console.log(response);
+        response.forEach(function(comment) {
+          var date = comment.date.replace(/T.*/, '');
+          console.log(date);
+          var commentDiv = $('<div class="comment col s12 l6 offset-l3"></div>');
+          var row = $('<div class="row"></div>')
+          commentDiv.append(row);
+          row.append('<h6>'+comment.username+'</h6>');
+          row.append('<p>'+comment.body+'</p>');
+          row.append('<p class="date">'+date+'</p>');
 
+          $('#all-comments').append(commentDiv);
+        })
+      })
+    })
   })
+
 
 
 })

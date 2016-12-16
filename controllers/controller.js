@@ -226,4 +226,19 @@ router.post('/home', function(req, res) {
   }
 })
 
+router.get('/home/:id', function(req, res) {
+  var articleId = req.params.id;
+
+  Article.find({_id: articleId}).populate('comment')
+    .exec(function(err, doc) {
+      res.send(doc[0].comment);
+    })
+})
+
+router.post('/signout', function(req, res) {
+  console.log('signout');
+  currentUser = undefined;
+  res.send(true);
+})
+
 module.exports = router;

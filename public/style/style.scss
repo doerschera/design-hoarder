@@ -52,7 +52,7 @@ section {
   height: 100vh;
   overflow: auto;
   padding-top: 100px;
-  // opacity: 0.3;
+  opacity: 0.3;
 }
 
 .article-item {
@@ -121,6 +121,13 @@ section {
   background-color: white;
   border: solid 1px black;
   color: black;
+  &:hover {
+    background-color: black;
+    color: white;
+  }
+  &:focus {
+    background-color: white;
+  }
 }
 
 .article-large {
@@ -215,9 +222,10 @@ textarea.materialize-textarea:focus:not([readonly])+label {
   }
   .btn {
     margin: 20px 0;
-    &:hover {
-      background-color: black;
-      color: white;
-    }
   }
+}
+
+
+.date {
+  font-size: 12px;
 }
