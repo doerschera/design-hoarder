@@ -16,7 +16,33 @@ $(document).ready(function() {
     }
   })
 
+  // sign up
+  $('#sign-up').on('click', function() {
+    var username = $('#username').val();
+    var password = $('#password').val();
+    var data = {
+      type: 'sign up'
+    };
 
+    console.log(username, password);
+
+    if(username != undefined && password != undefined) {
+      data.username = username;
+      data.password = password;
+    }
+
+    console.log(data);
+
+    $.post('/home', data).then(function(response) {
+      if(response != true) {
+        $('.error-message').html(response);
+        setTimeout(function() {
+          $('.error-message').html('');
+        }, 5000);
+      }
+    })
+
+  })
 
 
 })

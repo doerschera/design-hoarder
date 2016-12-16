@@ -126,4 +126,35 @@ router.get('/home', function(req, res) {
   })
 })
 
+router.post('/home', function(req, res) {
+  var data = req.body;
+  var hashedPassword = passwordHash.generate(data.password);
+  var userDetails = {
+    username: data.username,
+    password: hashedPassword
+  }
+
+  console.log(data);
+  switch(data.type) {
+    case 'sign up':
+      var user = new User(userDetails)
+      user.save(function(err) {
+        if (err) {
+          console.log(err);
+          var errMessage;
+          for(field in err.errors) {
+            errMessage = err.errors[field].message;
+          }
+          console.log(errMessage);
+        }
+        if(errMessage != undefined) {
+          res.send(errMessage);
+        } else {
+          res.send(true);
+        }
+      })
+      break;
+  }
+})
+
 module.exports = router;
