@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  var favoriteArticles;
 
   // ----- Sign In/Sign Up -------------
 
@@ -64,13 +65,17 @@ $(document).ready(function() {
     }
 
     $.post('/home', data).then(function(response) {
-      if(response != true) {
+      if(typeof response != 'object') {
         $('.error-message').html(response);
         setTimeout(function() {
           $('.error-message').html('');
         }, 5000);
       } else {
+        console.log(response);
         $('.sign-in-modal').hide();
+        // save favorites articles
+        favoriteArticles = response;
+        pastFavorites(favoriteArticles);
       }
     })
   })
@@ -90,6 +95,13 @@ $(document).ready(function() {
       console.log(response);
     })
   })
+
+  // mark already favorites articles
+  function pastFavorites(articles) {
+    articles.forEach(function(id) {
+      $('[data-article-id-f='+id+']').html('favorite');
+    })
+  }
 
 
 })

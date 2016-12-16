@@ -113,7 +113,6 @@ router.get('/', function(req, res) {
     })
   })
   res.redirect('/home');
-  console.log(true);
 })
 
 // user variable
@@ -171,7 +170,7 @@ router.post('/home', function(req, res) {
 
           if(verify) {
             currentUser = username;
-            res.send(true);
+            res.send(result[0].article);
           } else {
             res.send('Username or password incorrect!');
           }
