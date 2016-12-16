@@ -8,6 +8,8 @@ var User = require('../models/user.js');
 // scraping dependencies
 var request = require('request');
 var cheerio = require('cheerio');
+// password hash for user sign-in
+var passwordHash = require('password-hash');
 
 // --------- Mongo Config ------------------
 mongoose.connect('mongodb://localhost/designHoarder');
@@ -113,6 +115,9 @@ router.get('/', function(req, res) {
   res.redirect('/home');
   console.log(true);
 })
+
+// user variable
+var currentUser = '';
 
 router.get('/home', function(req, res) {
   Article.find({}, function(err, result) {
