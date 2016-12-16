@@ -91,6 +91,8 @@ $(document).ready(function() {
       type: 'add favorite'
     };
 
+    favoriteArticles.push(articleId);
+
     $.post('/home', data).then(function(response) {
       console.log(response);
     })
@@ -100,8 +102,32 @@ $(document).ready(function() {
   function pastFavorites(articles) {
     articles.forEach(function(id) {
       $('[data-article-id-f='+id+']').html('favorite');
+      $('[data-article-id='+id+']')
+        .removeClass('no-favorite');
+
     })
   }
+
+  $(document).on('click', '.show-favorites', function() {
+    console.log('click 1');
+    $('.no-favorite').hide();
+    $(this).html('Back').css({
+      color: 'white',
+      backgroundColor: 'black'
+    });
+    $('.show-favorites').addClass('show-all');
+    $('.show-favorites').removeClass('show-favorites');
+  })
+
+  $(document).on('click', '.show-all', function() {
+    console.log('click');
+    $('.no-favorite').show();
+    $(this).html('Favorites').css({
+      color: 'black',
+      backgroundColor: 'white'
+    });
+    $(this).removeClass('show-all').addClass('show-favorites');
+  })
 
 
 })
