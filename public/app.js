@@ -24,11 +24,11 @@ $(document).ready(function() {
       type: 'sign up'
     };
 
-    console.log(username, password);
-
     if(username != undefined && password != undefined) {
       data.username = username;
       data.password = password;
+    } else {
+      return false;
     }
 
     console.log(data);
@@ -39,9 +39,40 @@ $(document).ready(function() {
         setTimeout(function() {
           $('.error-message').html('');
         }, 5000);
+      } else {
+        $('.sign-in-modal').hide();
       }
     })
+  })
 
+  // sign in
+  $('#sign-in').on('click', function() {
+    var username = $('#username').val();
+    var password = $('#password').val();
+    var data = {
+      type: 'sign in'
+    };
+
+    $('#sign-out').html('Sign Out')
+      .removeClass('no-user');
+
+    if(username != undefined && password != undefined) {
+      data.username = username;
+      data.password = password;
+    } else {
+      return false;
+    }
+
+    $.post('/home', data).then(function(response) {
+      if(response != true) {
+        $('.error-message').html(response);
+        setTimeout(function() {
+          $('.error-message').html('');
+        }, 5000);
+      } else {
+        $('.sign-in-modal').hide();
+      }
+    })
   })
 
 

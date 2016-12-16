@@ -128,16 +128,17 @@ router.get('/home', function(req, res) {
 
 router.post('/home', function(req, res) {
   var data = req.body;
-  var hashedPassword = passwordHash.generate(data.password);
-  var userDetails = {
-    username: data.username,
-    password: hashedPassword
-  }
 
-  console.log(data);
   switch(data.type) {
+
     case 'sign up':
+      var hashedPassword = passwordHash.generate(data.password);
+      var userDetails = {
+        username: data.username,
+        password: hashedPassword
+      }
       var user = new User(userDetails)
+
       user.save(function(err) {
         if (err) {
           console.log(err);
@@ -150,7 +151,30 @@ router.post('/home', function(req, res) {
         if(errMessage != undefined) {
           res.send(errMessage);
         } else {
+          currentUser = userDetails.username;
           res.send(true);
+        }
+      })
+      break;
+
+    case 'sign in':
+      var username = data.username;
+      var password = data.password;
+      console.log('sign in');
+
+      User.find({username: username}, function(err, result) {
+        if(result.length < 1) {
+          res.send('Username or password incorrect!');
+        } else {
+          var hashedPassword = result[0].password;
+          var verify = passwordHash.verify(password, hashedPassword);
+
+          if(verify) {
+            currentUser = username;
+            res.send(true);
+          } else {
+            res.send('Username or password incorrect!');
+          }
         }
       })
       break;
