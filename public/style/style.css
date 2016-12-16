@@ -42,7 +42,8 @@ a {
 section {
   height: 100vh;
   overflow: auto;
-  padding-top: 100px; }
+  padding-top: 100px;
+  opacity: 0.3; }
 
 .article-item {
   margin-bottom: 50px;
@@ -98,6 +99,11 @@ section {
   background-color: white;
   border: solid 1px black;
   color: black; }
+  .btn:hover {
+    background-color: black;
+    color: white; }
+  .btn:focus {
+    background-color: white; }
 
 .article-large {
   position: fixed;
@@ -171,8 +177,8 @@ textarea.materialize-textarea:focus:not([readonly]) + label {
     padding-left: 0; }
   .add-comment .btn {
     margin: 20px 0; }
-    .add-comment .btn:hover {
-      background-color: black;
-      color: white; }
+
+.date {
+  font-size: 12px; }
 
 /*# sourceMappingURL=style.css.map */
