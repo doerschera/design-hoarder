@@ -113,7 +113,6 @@ router.get('/', function(req, res) {
     })
   })
   res.redirect('/home');
-  console.log(true);
 })
 
 // user variable
@@ -171,13 +170,27 @@ router.post('/home', function(req, res) {
 
           if(verify) {
             currentUser = username;
-            res.send(true);
+            res.send(result[0].article);
           } else {
             res.send('Username or password incorrect!');
           }
         }
       })
       break;
+
+    case 'add favorite':
+      var articleId = data.id;
+      User.findOneAndUpdate({username: currentUser}, {$push: {article: articleId}})
+        .exec(function(err, doc) {
+          if(err) {
+            console.log(err);
+          } else {
+            console.log(doc);
+            res.send(true);
+          }
+        })
+      break;
+
   }
 })
 

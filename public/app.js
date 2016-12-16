@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  var favoriteArticles;
 
   // ----- Sign In/Sign Up -------------
 
@@ -64,15 +65,68 @@ $(document).ready(function() {
     }
 
     $.post('/home', data).then(function(response) {
-      if(response != true) {
+      if(typeof response != 'object') {
         $('.error-message').html(response);
         setTimeout(function() {
           $('.error-message').html('');
         }, 5000);
       } else {
+        console.log(response);
         $('.sign-in-modal').hide();
+        // save favorites articles
+        favoriteArticles = response;
+        pastFavorites(favoriteArticles);
       }
     })
+  })
+
+  // -------- Favorites -------------------
+
+  $('.favorite').on('click', function() {
+    $(this).html('favorite');
+
+    var articleId = $(this).attr('data-article-id');
+    var data = {
+      id: articleId,
+      type: 'add favorite'
+    };
+
+    favoriteArticles.push(articleId);
+
+    $.post('/home', data).then(function(response) {
+      console.log(response);
+    })
+  })
+
+  // mark already favorites articles
+  function pastFavorites(articles) {
+    articles.forEach(function(id) {
+      $('[data-article-id-f='+id+']').html('favorite');
+      $('[data-article-id='+id+']')
+        .removeClass('no-favorite');
+
+    })
+  }
+
+  $(document).on('click', '.show-favorites', function() {
+    console.log('click 1');
+    $('.no-favorite').hide();
+    $(this).html('Back').css({
+      color: 'white',
+      backgroundColor: 'black'
+    });
+    $('.show-favorites').addClass('show-all');
+    $('.show-favorites').removeClass('show-favorites');
+  })
+
+  $(document).on('click', '.show-all', function() {
+    console.log('click');
+    $('.no-favorite').show();
+    $(this).html('Favorites').css({
+      color: 'black',
+      backgroundColor: 'white'
+    });
+    $(this).removeClass('show-all').addClass('show-favorites');
   })
 
 
