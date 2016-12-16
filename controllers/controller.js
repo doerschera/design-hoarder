@@ -178,6 +178,20 @@ router.post('/home', function(req, res) {
         }
       })
       break;
+
+    case 'add favorite':
+      var articleId = data.id;
+      User.findOneAndUpdate({username: currentUser}, {$push: {article: articleId}})
+        .exec(function(err, doc) {
+          if(err) {
+            console.log(err);
+          } else {
+            console.log(doc);
+            res.send(true);
+          }
+        })
+      break;
+
   }
 })
 

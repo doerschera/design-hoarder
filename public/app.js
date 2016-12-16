@@ -75,5 +75,21 @@ $(document).ready(function() {
     })
   })
 
+  // -------- Favorites -------------------
+
+  $('.favorite').on('click', function() {
+    $(this).html('favorite');
+
+    var articleId = $(this).attr('data-article-id');
+    var data = {
+      id: articleId,
+      type: 'add favorite'
+    };
+
+    $.post('/home', data).then(function(response) {
+      console.log(response);
+    })
+  })
+
 
 })
