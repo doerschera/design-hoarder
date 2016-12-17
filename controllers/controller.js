@@ -119,10 +119,11 @@ router.get('/', function(req, res) {
 var currentUser = '';
 
 router.get('/home', function(req, res) {
-  Article.find({}, function(err, result) {
-    var data = {articles: result};
-    res.render('index', data);
-  })
+  Article.find({}).sort({date: -1})
+    .exec(function(err, result) {
+      var data = {articles: result};
+      res.render('index', data);
+    })
 })
 
 router.post('/home', function(req, res) {
@@ -191,54 +192,7 @@ router.post('/home', function(req, res) {
         })
       break;
 
-    case 'comment':
-    console.log('comment');
-      var articleId = data.article;
-      var comment = {
-        body: data.comment,
-        username: currentUser
-      }
-      var newComment = new Comment(comment);
-
-      newComment.save(function(err, doc) {
-        if(err) {
-          console.log(err);
-        } else {
-          User.findOneAndUpdate({username: currentUser}, {$push: {comment: doc._id}}).exec(function(err, doc) {
-            if(err) {
-              console.log(err);
-            }
-          })
-
-          Article.findOneAndUpdate({_id: articleId}, {$push: {comment: doc._id}})
-            .exec(function(err, doc) {
-              if(err) {
-                console.log(err);
-              }
-            })
-
-          res.send(true);
-        }
-      })
-
-      break;
-
   }
-})
-
-router.get('/home/:id', function(req, res) {
-  var articleId = req.params.id;
-
-  Article.find({_id: articleId}).populate('comment')
-    .exec(function(err, doc) {
-      res.send(doc[0].comment);
-    })
-})
-
-router.post('/signout', function(req, res) {
-  console.log('signout');
-  currentUser = undefined;
-  res.send(true);
 })
 
 module.exports = router;

@@ -1,5 +1,6 @@
 $(document).ready(function() {
   var favoriteArticles;
+  var noUser = true;
 
   // ----- Sign In/Sign Up -------------
 
@@ -9,6 +10,7 @@ $(document).ready(function() {
     $('#sign-out').html('Sign In')
       .addClass('no-user');
     $('section').css('opacity', '1');
+    $('.add-comment').hide();
   })
 
   // show modal sign out/sign in
@@ -50,6 +52,7 @@ $(document).ready(function() {
       } else {
         $('.sign-in-modal').hide();
         $('section').css('opacity', '1');
+        noUser = false;
       }
     })
   })
@@ -81,6 +84,7 @@ $(document).ready(function() {
       } else {
         $('.sign-in-modal').hide();
         $('section').css('opacity', '1');
+        noUser = false;
         // save favorites articles
         favoriteArticles = response;
         pastFavorites(favoriteArticles);
@@ -124,6 +128,9 @@ $(document).ready(function() {
     });
     $('.show-favorites').addClass('show-all');
     $('.show-favorites').removeClass('show-favorites');
+    if(noUser) {
+      $('.article-container').append('<h4 class="no-user-favorites">Please sign in to save favorites!</h4>');
+    }
   })
 
   $(document).on('click', '.show-all', function() {
@@ -136,6 +143,9 @@ $(document).ready(function() {
       backgroundColor: 'white'
     });
     $(this).removeClass('show-all').addClass('show-favorites');
+    if(noUser) {
+      $('.no-user-favorites').empty();
+    }
   })
 
   // -------- Comments --------------------
