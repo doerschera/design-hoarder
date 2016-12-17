@@ -149,7 +149,7 @@ $(document).ready(function() {
   })
 
   // -------- Comments --------------------
-
+  var largeArticleId;
   $(document).on('click', '.article-item', function() {
     $('#all-comments').empty();
     $('.show-all, .show-favorites').html('Back').css({
@@ -161,6 +161,7 @@ $(document).ready(function() {
 
     var data = $(this).data();
     var articleId = data.articleId;
+    largeArticleId = data.articleId;
     var link = data.articleLink;
     var img = $('[data-article-id='+articleId+'] div.article-img img').attr('src');
     var title = $('[data-article-id='+articleId+'] div.article-img img').attr('alt');
@@ -197,7 +198,8 @@ $(document).ready(function() {
 
   $('#submit-comment').on('click', function() {
     var id = $('.article-large').data()
-    var articleId = id.articleId;
+    var articleId = largeArticleId;
+    console.log(articleId);
     var data = {
       article: articleId,
       comment: $('#comment').val(),
