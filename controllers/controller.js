@@ -70,7 +70,7 @@ router.get('/', function(req, res) {
       })
 
       // collossal
-      request('https://www.thisiscolossal.com/', function(error, response, html) {
+      request('http://www.thisiscolossal.com/', function(error, response, html) {
         if(error) {
           console.log(error);
         }
