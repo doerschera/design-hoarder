@@ -96,13 +96,17 @@ $(document).ready(function() {
 
   $('.favorite').on('click', function() {
     $(this).html('favorite');
-    $(this).removeClass('.no-favorite');
 
-    var articleId = $(this).attr('data-article-id');
+    var articleId = $(this).attr('data-article-id-f');
     var data = {
       id: articleId,
       type: 'add favorite'
     };
+
+    console.log(data);
+
+    $('[data-article-id='+articleId+']')
+      .removeClass('no-favorite');
 
     favoriteArticles.push(articleId);
 
