@@ -128,6 +128,7 @@ $(document).ready(function() {
     });
     $('.show-favorites').addClass('show-all');
     $('.show-favorites').removeClass('show-favorites');
+
     if(noUser) {
       $('.article-container').append('<h4 class="no-user-favorites">Please sign in to save favorites!</h4>');
     }
