@@ -96,6 +96,7 @@ $(document).ready(function() {
 
   $('.favorite').on('click', function() {
     $(this).html('favorite');
+    $(this).removeClass('.no-favorite');
 
     var articleId = $(this).attr('data-article-id');
     var data = {
