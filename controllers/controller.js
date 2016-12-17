@@ -29,7 +29,7 @@ router.get('/', function(req, res) {
 
   // ------- scraping ------------
   // Design milk
-  request('http://design-milk.com/', function(error, response, html) {
+  request('https://design-milk.com/', function(error, response, html) {
     var $ = cheerio.load(html);
 
     $('.latest-listings-grid .article-list-item').each(function(i, element) {
@@ -50,7 +50,7 @@ router.get('/', function(req, res) {
     })
 
     // designboom
-    request('http://www.designboom.com/', function(error, response, html) {
+    request('https://www.designboom.com/', function(error, response, html) {
       var $ = cheerio.load(html);
 
       $('.News').each(function(i, element) {
@@ -70,7 +70,7 @@ router.get('/', function(req, res) {
       })
 
       // collossal
-      request('http://www.thisiscolossal.com/', function(error, response, html) {
+      request('https://www.thisiscolossal.com/', function(error, response, html) {
         var $ = cheerio.load(html);
 
         $('article').each(function(i, element) {
@@ -90,7 +90,7 @@ router.get('/', function(req, res) {
         })
 
         // socks
-        request('http://socks-studio.com/', function(error, response, html) {
+        request('https://socks-studio.com/', function(error, response, html) {
           var $ = cheerio.load(html);
 
           $('.featured-content').each(function(i, element) {
